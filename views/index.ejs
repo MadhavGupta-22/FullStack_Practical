@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Record Management System</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Student Record Management System</h1>
+    <p class="subtitle">Create, view, edit, and delete student records.</p>
+
+    <section class="form-section">
+      <h2>Add Student</h2>
+      <form action="/students/add" method="POST">
+        <input type="text" name="name" placeholder="Student name" required>
+        <input type="text" name="rollNumber" placeholder="Roll number" required>
+        <input type="text" name="branch" placeholder="Branch">
+        <input type="number" name="marks" placeholder="Marks" min="0" max="100">
+        <button type="submit">Add Student</button>
+      </form>
+    </section>
+
+    <section class="table-section">
+      <h2>All Students</h2>
+
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Roll Number</th>
+          <th>Branch</th>
+          <th>Marks</th>
+          <th>Action</th>
+        </tr>
+
+        <% students.forEach(function(student) { %>
+          <tr>
+            <td><%= student.name %></td>
+            <td><%= student.rollNumber %></td>
+            <td><%= student.branch %></td>
+            <td>
+              <form class="inline-form" action="/students/update-marks/<%= student._id %>" method="POST">
+                <input type="number" name="marks" value="<%= student.marks %>" min="0" max="100">
+                <button type="submit">Edit</button>
+              </form>
+            </td>
+            <td>
+              <form action="/students/delete/<%= student._id %>" method="POST">
+                <button class="delete-btn" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
